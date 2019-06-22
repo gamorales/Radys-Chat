@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
     'channels',
     'chat'
 ]
@@ -55,6 +56,8 @@ ROOT_URLCONF = 'chatradys.urls'
 
 TEMPLATES = [
     {
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
@@ -68,6 +71,9 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGIN_REDIRECT_URL = '/chat/general/'
+LOGOUT_REDIRECT_URL = 'home'
 
 WSGI_APPLICATION = 'chatradys.wsgi.application'
 ASGI_APPLICATION = 'chatradys.routing.application'

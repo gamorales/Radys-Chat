@@ -17,10 +17,20 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 
+from rest_framework import routers
+from chat import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+
 urlpatterns = [
     url(r'^chat/', include('chat.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('accounts.urls')),
-    url('', TemplateView.as_view(template_name='chat/index.html'), name='home'),
+    #url('', TemplateView.as_view(template_name='chat/room.html'), name='home'),
+
+    url('', include(router.urls)),
+    url(r'^chat-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

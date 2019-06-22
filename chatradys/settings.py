@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts.apps.AccountsConfig',
     'channels',
-    'chat'
+    'rest_framework',
+    'chat',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -73,10 +74,20 @@ TEMPLATES = [
 ]
 
 LOGIN_REDIRECT_URL = '/chat/general/'
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 WSGI_APPLICATION = 'chatradys.wsgi.application'
 ASGI_APPLICATION = 'chatradys.routing.application'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 CHANNEL_LAYERS = {
     'default': {
